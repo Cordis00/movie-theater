@@ -1,5 +1,5 @@
 import VueRouter from 'vue-router'
-import MovieSessions from './pages/movieSessions/MovieSessions'
+import MovieList from './pages/movieList/MovieList'
 
 export default new VueRouter({
 	mode: 'history',
@@ -7,10 +7,10 @@ export default new VueRouter({
 	routes: [
 		{
 			path: '/',
-			name: 'movie_sessions',
-			component: MovieSessions,
+			name: 'movieList',
+			component: MovieList,
 			meta: {
-				title: 'Movie sessions',
+				title: 'MovieList',
 			}
 		}
 	]

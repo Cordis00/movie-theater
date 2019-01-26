@@ -54,7 +54,6 @@
 		<span class="title ml-3 mr-5">Movie theater</span>
 
 		<v-spacer></v-spacer>
-		<v-btn flat @click="logout()">Logout</v-btn>
 	</v-toolbar>
 	<v-content>
 		<v-container fluid fill-height class="grey lighten-4">
@@ -75,7 +74,7 @@ export default {
 		drawer: null,
 		menuItems: [
 			{
-				icon: 'hd',
+				icon: 'collections',
 				text: 'Movie sessions',
 				to: '/'
 			}
