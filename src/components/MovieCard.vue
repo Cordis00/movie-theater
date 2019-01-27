@@ -74,10 +74,7 @@ export default {
 
 			li {
 				display: inline;
-				background-color: #59a3d5;
-				padding: 4px 9px;
 				margin: 0px 13px;
-				border-radius: 3px;
 				cursor: pointer;
 
 				&:hover {
@@ -85,8 +82,11 @@ export default {
 				}
 
 				a {
+					border-radius: 3px;
+					background-color: #59a3d5;
 					color: #fff;
 					text-decoration: none;
+					padding: 4px 9px;
 				}
 			}
 		}

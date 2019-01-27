@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<h2 class="pageTitle">Сеанс {{ session.time }} на фільм - {{ session.movie.name }}</h2>
+		<h2 class="pageTitle">Сеанс {{ session.time }} на фільм - {{ session.movie ? session.movie.name : '' }}</h2>
 		<v-layout>
 			<v-flex md7>
 				<cinema-hall
@@ -20,8 +20,11 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
 import CinemaHall from './CinemaHall'
 import TicketOrder from './TicketOrder'
+
+const { mapActions, mapState } = createNamespacedHelpers('sessions')
 
 export default {
 	components: {
@@ -29,16 +32,23 @@ export default {
 		TicketOrder
 	},
 	data: () => ({
-		session: {},
 		bookPlaces: [],
 		removedPlace: null
 	}),
+	computed: {
+		...mapState([
+			'session',
+		])
+	},
 	created() {
-		this.session = this.getSession({
+		this.getSession({
 			sessionId: this.$route.params.sessionId
 		})
 	},
 	methods: {
+		...mapActions([
+			'getSession',
+		]),
 		allRemove() {
 			this.removedPlace = {
 				all: true
@@ -58,28 +68,6 @@ export default {
 					item => item.row != place.index_row ||
 							item.col != place.index_col
 				)
-			}
-		},
-		getSession(id) {
-			return {
-				id: id,
-				hall_number: 2,
-				time: '19:30',
-				date: new Date(),
-				movie: {
-					id: 1,
-					name: 'Небезпечна гра Слоун',
-					age_limit: '16+',
-					image: 'film_1',
-					date: '20 жовтня, суббота',
-					type: 'CINETECH+, 2D',
-					available_sessions: [
-						{
-							id: 1,
-							time: '19:30'
-						}
-					]
-				}
 			}
 		}
 	}

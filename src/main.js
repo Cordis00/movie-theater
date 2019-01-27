@@ -12,6 +12,12 @@ import store from './Store'
 import { sync } from 'vuex-router-sync'
 sync(store, Router)
 
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
+
+import apiConfig from '../config'
+Vue.http.options.root = apiConfig.url
+
 Vue.config.productionTip = false
 
 new Vue({
