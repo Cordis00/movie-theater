@@ -3,9 +3,9 @@
 		<div class="screen">Экран</div>
 		<div class="all-places">
 			<span class="place-group" v-for="index_row in 10" :key="index_row">
-				<span v-for="index_number in 20" :key="index_number">
-					<div class="place free"
-						@click="book($event, index_row, index_number)">
+				<span v-for="index_col in 20" :key="index_col">
+					<div class="place free" :ref="'place_' + index_row + '.' + index_col"
+						@click="book($event, index_row, index_col)">
 						<v-icon class="hide" color="white" small>perm_identity</v-icon>
 					</div>
 				</span>
@@ -16,16 +16,47 @@
 
 <script>
 export default {
+	props: [
+		'removedPlace'
+	],
+	watch: {
+		removedPlace() {
+			if(this.removedPlace.all) {
+				this.removeAll()
+				return
+			}
+			let element = this.$refs[
+				'place_' +
+				this.removedPlace.index_row + '.' +
+				this.removedPlace.index_col][0]
+			this.deleteElement(element)
+		}
+	},
 	methods: {
-		book(event, index_row, index_number) {
-			let book = event.target.parentElement.classList.toggle('booked')
-			event.target.classList.toggle('show')
+		removeAll() {
+			for (var key in this.$refs) {
+				let element = this.$refs[key][0]
+				if(!element.classList.contains('booked')) continue
+				this.deleteElement(element)
+			}
+		},
+		book(event, index_row, index_col) {
+			let book = false
+			if(!event.target.parentElement.classList.contains('booked')) {
+				book = true
+				let element = this.$refs['place_' + index_row + '.' + index_col][0]
+				this.deleteElement(element)
+			}
 			this.$emit('updateBookPlaces', {
 				book: book,
 				index_row: index_row,
-				index_number: index_number,
+				index_col: index_col,
 				price: index_row <= 5 ? 50 : 100
 			})
+		},
+		deleteElement(element) {
+			element.classList.toggle('booked')
+			element.children[0].classList.toggle('show')
 		}
 	}
 }

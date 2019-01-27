@@ -4,12 +4,15 @@
 		<v-layout>
 			<v-flex md7>
 				<cinema-hall
+					:removedPlace="removedPlace"
 					@updateBookPlaces="updateBookPlaces"
 				/>
 			</v-flex>
 			<v-flex md4>
 				<ticket-order
 					:bookPlaces="bookPlaces"
+					@updateBookPlaces="updateBookPlaces"
+					@allRemove="allRemove"
 				/>
 			</v-flex>
 		</v-layout>
@@ -27,7 +30,8 @@ export default {
 	},
 	data: () => ({
 		session: {},
-		bookPlaces: []
+		bookPlaces: [],
+		removedPlace: null
 	}),
 	created() {
 		this.session = this.getSession({
@@ -35,17 +39,24 @@ export default {
 		})
 	},
 	methods: {
+		allRemove() {
+			this.removedPlace = {
+				all: true
+			}
+			this.bookPlaces = []
+		},
 		updateBookPlaces(place) {
 			if(place.book) {
 				this.bookPlaces.push({
 					row: place.index_row,
-					number: place.index_number,
+					col: place.index_col,
 					price: place.price
 				})
 			} else {
+				this.removedPlace = place
 				this.bookPlaces = this.bookPlaces.filter(
-					item => item.row != place.index_row &&
-							item.number != place.index_number
+					item => item.row != place.index_row ||
+							item.col != place.index_col
 				)
 			}
 		},
