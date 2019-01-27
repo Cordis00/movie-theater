@@ -52,7 +52,6 @@
 	<v-toolbar color="primary" app absolute clipped-left>
 		<v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
 		<span class="title ml-3 mr-5">Movie theater</span>
-
 		<v-spacer></v-spacer>
 	</v-toolbar>
 	<v-content>
@@ -75,7 +74,7 @@ export default {
 		menuItems: [
 			{
 				icon: 'collections',
-				text: 'Movie sessions',
+				text: 'Список фільмів',
 				to: '/'
 			}
 		]

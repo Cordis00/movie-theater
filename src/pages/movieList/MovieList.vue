@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<h2 class="pageTitle">Movie list</h2>
+		<h2 class="pageTitle">Список фільмів</h2>
 		<movie-card
 			v-for="movie in movieList" :key="movie.id"
 			:movie="movie"
@@ -25,7 +25,10 @@ export default {
 				date: '20 жовтня, суббота',
 				type: 'CINETECH+, 2D',
 				available_sessions: [
-					'19:30'
+					{
+						id: 1,
+						time: '19:30'
+					}
 				]
 			},
 			{
@@ -36,7 +39,22 @@ export default {
 				date: '20 жовтня, суббота',
 				type: 'CINETECH+, 2D',
 				available_sessions: [
-					'11:45', '16-10', '18-50', '21-30'
+					{
+						id: 2,
+						time: '11:45'
+					},
+					{
+						id: 3,
+						time: '16:10'
+					},
+					{
+						id: 4,
+						time: '18:50'
+					},
+					{
+						id: 5,
+						time: '21:30'
+					}
 				]
 			}
 		]

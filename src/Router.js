@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router'
 import MovieList from './pages/movieList/MovieList'
+import MovieSession from './pages/movieSession/MovieSession'
 
 export default new VueRouter({
 	mode: 'history',
@@ -10,7 +11,15 @@ export default new VueRouter({
 			name: 'movieList',
 			component: MovieList,
 			meta: {
-				title: 'MovieList',
+				title: 'Movie list',
+			}
+		},
+		{
+			path: '/session/:sessionId',
+			name: 'session',
+			component: MovieSession,
+			meta: {
+				title: 'Movie session',
 			}
 		}
 	]

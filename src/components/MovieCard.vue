@@ -13,8 +13,10 @@
 			<p>{{ movie.date }}</p>
 			<span class="movieType">{{ movie.type }}</span>
 			<ul class="sessionList">
-				<li v-for="(time, i) in movie.available_sessions" :key="i">
-					{{ time }}
+				<li v-for="(session, i) in movie.available_sessions" :key="i">
+					<router-link :to="{ name: 'session', params: { sessionId: session.id }}">
+						{{ session.time }}
+					</router-link>
 				</li>
 			</ul>
 		</v-flex>
@@ -75,9 +77,17 @@ export default {
 				background-color: #59a3d5;
 				padding: 4px 9px;
 				margin: 0px 13px;
-				color: #fff;
 				border-radius: 3px;
 				cursor: pointer;
+
+				&:hover {
+					background-color: #3b8fc7;
+				}
+
+				a {
+					color: #fff;
+					text-decoration: none;
+				}
 			}
 		}
 	}
