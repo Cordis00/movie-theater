@@ -1,18 +1,20 @@
 <template>
 	<v-container>
-		<h2 class="pageTitle">Сеанс {{ session.time }} на фільм - {{ session.movie ? session.movie.name : '' }}</h2>
+		<h2 class="pageTitle">
+			Сеанс {{ session.time }} на фільм - {{ session.movie ? session.movie.name : '' }}
+		</h2>
 		<v-layout>
 			<v-flex md7>
 				<cinema-hall
-					:removedPlace="removedPlace"
-					@updateBookPlaces="updateBookPlaces"
+					:moviePlaces="moviePlaces"
+					@updateMoviePlaces="updateMoviePlaces"
 				/>
 			</v-flex>
 			<v-flex md4>
 				<ticket-order
 					:bookPlaces="bookPlaces"
-					@updateBookPlaces="updateBookPlaces"
-					@allRemove="allRemove"
+					@updateMoviePlaces="updateMoviePlaces"
+					@fullRemove="fullRemove"
 				/>
 			</v-flex>
 		</v-layout>
@@ -33,14 +35,15 @@ export default {
 	},
 	data: () => ({
 		bookPlaces: [],
-		removedPlace: null
+		moviePlaces: []
 	}),
 	computed: {
 		...mapState([
 			'session',
-		])
+		]),
 	},
 	created() {
+		this.moviePlaces = this.generateFreePlaces()
 		this.getSession({
 			sessionId: this.$route.params.sessionId
 		})
@@ -49,26 +52,40 @@ export default {
 		...mapActions([
 			'getSession',
 		]),
-		allRemove() {
-			this.removedPlace = {
-				all: true
-			}
-			this.bookPlaces = []
-		},
-		updateBookPlaces(place) {
-			if(place.book) {
+		updateMoviePlaces(place) {
+			// Drawing places
+			let oldPlaces = this.moviePlaces.slice()
+			this.moviePlaces = []
+			oldPlaces[place.row][place.col] = place.value == 0 ? 1 : 0
+			this.moviePlaces = oldPlaces
+
+			if(place.value == 0) {
 				this.bookPlaces.push({
-					row: place.index_row,
-					col: place.index_col,
+					row: place.row,
+					col: place.col,
 					price: place.price
 				})
 			} else {
-				this.removedPlace = place
 				this.bookPlaces = this.bookPlaces.filter(
-					item => item.row != place.index_row ||
-							item.col != place.index_col
+					item => item.row != place.row ||
+							item.col != place.col
 				)
 			}
+		},
+		generateFreePlaces() {
+			let places = []
+			for(let i = 0; i < 10; i++) {
+				let row = []
+				for(let j = 0; j < 20; j++) {
+					row[j] = 0
+				}
+				places.push(row)
+			}
+			return places
+		},
+		fullRemove() {
+			this.moviePlaces = this.generateFreePlaces()
+			this.bookPlaces = []
 		}
 	}
 }

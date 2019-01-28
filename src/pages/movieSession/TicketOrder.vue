@@ -5,17 +5,16 @@
 			<li>Ряд</li>
 			<li>Місце</li>
 			<li>Ціна</li>
-			<li></li>
 		</ul>
 		<ul class="content" v-for="(place, index) in bookPlaces" :key="index">
-			<li>{{ place.row }}</li>
-			<li>{{ place.col }}</li>
+			<li>{{ place.row + 1 }}</li>
+			<li>{{ place.col + 1 }}</li>
 			<li>{{ place.price }} грн</li>
-			<li @click="removeTicket(place.row, place.col)">X</li>
+			<li @click="removeTicket(place)">X</li>
 		</ul>
-		<ul class="content remove-button">
+		<ul class="content remove-button" v-if="bookPlaces.length > 0">
 			<li>Видалити все</li>
-			<li @click="allRemove">X</li>
+			<li @click="fullRemove">X</li>
 		</ul>
 		<p class="total-price">
 			Всього:
@@ -25,6 +24,7 @@
 			color="orange darken-4"
 			class="buy-button"
 			@click="dialog = true"
+			:disabled="bookPlaces.length < 1"
 		>
 			Далі
 		</v-btn>
@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import './movieSession.scss'
+
 export default {
 	props: {
 		bookPlaces: {
@@ -68,88 +70,20 @@ export default {
 		}
 	},
 	methods: {
-		removeTicket(row, col) {
-			this.$emit('updateBookPlaces', {
-				book: false,
-				index_row: row,
-				index_col: col
+		removeTicket(place) {
+			this.$emit('updateMoviePlaces', {
+				row: place.row,
+				col: place.col,
+				value: 1
 			})
 		},
-		allRemove() {
-			this.$emit('allRemove')
+		fullRemove() {
+			this.$emit('fullRemove')
 		}
 	}
 }
 </script>
 
-<style lang="scss">
-	.order {
-		width: 250px;
-		margin: 35px auto 10px;
+<style>
 
-		.order-title {
-			font-size: 24px;
-			font-weight: 400;
-			margin-bottom: 20px;
-		}
-		.head {
-			font-size: 12px;
-			padding: 8px 0px;
-		}
-		.content {
-			padding: 5px 0;
-
-			li:last-child {
-				cursor: pointer;
-				text-align: center;
-				background: #e6e6e6;
-				border-radius: 50%;
-				width: 27px;
-				margin-left: 10px;
-			}
-		}
-		ul {
-			list-style: none;
-			padding: 0;
-			border-bottom: 1px solid #cacaca;
-
-			li {
-				display: inline-block;
-				width: 60px;
-				padding: 3px;
-			}
-		}
-		.remove-button {
-			border: none;
-
-			li:first-child {
-				width: 180px;
-			}
-		}
-		.total-price {
-			margin-top: 10px;
-			font-size: 20px;
-			font-weight: 600;
-
-			span {
-				float: right;
-			}
-		}
-		.buy-button {
-			color: #fff;
-			margin: 0 auto;
-			display: block;
-			width: 200px;
-			border-radius: 25px;
-
-			.v-btn__content {
-				text-align: center;
-				display: inline;
-			}
-		}
-	}
-	.headline {
-		display: block;
-		margin: 0 auto;
-	}
 </style>

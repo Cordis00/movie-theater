@@ -1,0 +1,107 @@
+.screen {
+	user-select: none;
+	text-align: center;
+	background-color: #e6f6fd;
+	margin-top: 20px;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+}
+.hall {
+	margin: 70px auto 0px;
+	display: table;
+
+	.place-group {
+		float: left;
+		clear: both;
+	}
+	.place {
+		float: left;
+		background-color: #82bdd2;
+		width: 16px;
+		height: 18px;
+		margin: 3px;
+		border-radius: 3px;
+		cursor: pointer;
+		user-select: none;
+	}
+	.free:hover {
+		background-color: #3b8fc7;
+	}
+	.booked {
+		background-color: #e8a651;
+
+		&:hover {
+			background-color: #e8a651;
+		}
+	}
+}
+
+.order {
+	width: 250px;
+	margin: 35px auto 10px;
+
+	.order-title {
+		font-size: 24px;
+		font-weight: 400;
+		margin-bottom: 20px;
+	}
+	.head {
+		font-size: 12px;
+		padding: 8px 0px;
+	}
+	.content {
+		padding: 5px 0;
+
+		li:last-child {
+			cursor: pointer;
+			text-align: center;
+			background: #e6e6e6;
+			border-radius: 50%;
+			width: 27px;
+			margin-left: 10px;
+		}
+	}
+	ul {
+		list-style: none;
+		padding: 0;
+		border-bottom: 1px solid #cacaca;
+
+		li {
+			display: inline-block;
+			width: 60px;
+			padding: 3px;
+		}
+	}
+	.remove-button {
+		border: none;
+
+		li:first-child {
+			width: 180px;
+		}
+	}
+	.total-price {
+		margin-top: 10px;
+		font-size: 20px;
+		font-weight: 600;
+
+		span {
+			float: right;
+		}
+	}
+	.buy-button {
+		color: #fff;
+		margin: 0 auto;
+		display: block;
+		width: 200px;
+		border-radius: 25px;
+
+		.v-btn__content {
+			text-align: center;
+			display: inline;
+		}
+	}
+}
+.headline {
+	display: block;
+	margin: 0 auto;
+}
