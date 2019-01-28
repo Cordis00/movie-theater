@@ -30,6 +30,7 @@
 		</v-btn>
 		<order-dialog
 			v-model="dialog"
+			:totalPrice="totalPrice"
 		/>
 	</div>
 </template>
