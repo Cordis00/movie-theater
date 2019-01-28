@@ -28,29 +28,15 @@
 		>
 			Далі
 		</v-btn>
-
-		<v-dialog v-model="dialog" max-width="600px">
-			<v-card>
-				<v-card-title>
-					<span class="headline">Купівля пройшла успішно</span>
-				</v-card-title>
-				<v-card-actions>
-					<v-spacer></v-spacer>
-					<v-btn color="green darken-1"
-						flat
-						@click="dialog = false"
-						to="/"
-					>
-						Список фільмів
-					</v-btn>
-				</v-card-actions>
-			</v-card>
-		</v-dialog>
+		<order-dialog
+			v-model="dialog"
+		/>
 	</div>
 </template>
 
 <script>
 import './movieSession.scss'
+import OrderDialog from './OrderDialog'
 
 export default {
 	props: {
@@ -58,6 +44,9 @@ export default {
 			type: Array,
 			default: []
 		}
+	},
+	components: {
+		OrderDialog
 	},
 	data: () => ({
 		dialog: false
