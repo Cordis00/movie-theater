@@ -35,7 +35,9 @@ export default {
 	},
 	data: () => ({
 		bookPlaces: [],
-		moviePlaces: []
+		moviePlaces: [],
+		row_number: 10,
+		col_number: 20
 	}),
 	computed: {
 		...mapState([
@@ -54,10 +56,9 @@ export default {
 		]),
 		updateMoviePlaces(place) {
 			// Drawing places
-			let oldPlaces = this.moviePlaces.slice()
-			this.moviePlaces = []
-			oldPlaces[place.row][place.col] = place.value == 0 ? 1 : 0
-			this.moviePlaces = oldPlaces
+			let newRow = this.moviePlaces[place.row].slice(0)
+			newRow[place.col] = place.value == 0 ? 1 : 0
+			this.$set(this.moviePlaces, place.row, newRow)
 
 			if(place.value == 0) {
 				this.bookPlaces.push({
@@ -74,9 +75,9 @@ export default {
 		},
 		generateFreePlaces() {
 			let places = []
-			for(let i = 0; i < 10; i++) {
+			for(let i = 0; i < this.row_number; i++) {
 				let row = []
-				for(let j = 0; j < 20; j++) {
+				for(let j = 0; j < this.col_number; j++) {
 					row[j] = 0
 				}
 				places.push(row)
